@@ -1,0 +1,19 @@
+<% if current_user %>
+	<h4>
+		Logged in as <%= current_user.email %>
+		<% if current_user.provider %>
+			through <%= current_user.provider %>
+		<% end %>
+	</h4>
+	<%= link_to("Log out", :destroy_user_session , data: { method: "delete" }) %>
+
+<% else %>
+  <%= link_to "Log in", :new_user_session %><br />
+
+  <%= link_to "Sign up", :new_user_registration %><br />
+
+  <%- User.omniauth_providers.each do |provider| %>
+    <%= link_to "Sign in with #{provider.to_s.titleize}", omniauth_authorize_path(:user, provider) %><br />
+  <% end -%>
+
+<% end %>
