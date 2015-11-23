@@ -3,12 +3,10 @@ class User < ActiveRecord::Base
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,
-         :omniauthable, :omniauth_providers => [:facebook]
+         :omniauthable, :omniauth_providers => [:facebook, :google_oauth2]
 
   class << self
 		def from_omniauth(auth)
-			puts "~~~~auth"
-			p auth
 			# binding.pry
 			identity = User.where(provider: auth.provider, uid: auth.uid).first_or_create do |identity|
 			  identity.provider     = auth.provider
